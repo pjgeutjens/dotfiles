@@ -1,0 +1,56 @@
+#!/usr/bin/env bash
+
+if [[ $# -eq 1 ]]; then
+	selected=$1
+else
+	selected=$(find ~/work ~/personal ~/.config -maxdepth 3 -type d | fzf)
+fi
+
+if [[ -z $selected ]]; then
+	exit 0
+fi
+
+selected_name=$(basename "$selected" | tr . _)
+tmux_running=$(pgrep tmux)
+
+if [[ -z $TMUX ]] && [[ -z $tmux_running ]]; then
+	echo "starting tmux"
+	tmux new-session -ds $selected_name -c $selected
+	# exit 0
+fi
+
+if ! tmux has-session -t=$selected_name 2>/dev/null; then
+	echo "creating new session"
+	tmux new-session -ds $selected_name -c $selected
+fi
+
+sleep 1
+
+bash_window_exists=$(tmux list-windows -t $selected_name | grep bash)
+nvim_window_exists=$(tmux list-windows -t $selected_name | grep nvim)
+client_exists=$(tmux list-clients)
+
+if [[ -z $nvim_window_exists ]]; then
+	echo "creating nvim window"
+	tmux neww -t $selected_name -c $selected -n nvim
+	tmux send-keys -t $selected_name:nvim 'nvim .' Enter
+else
+	echo "nvim window exists"
+fi
+
+if [[ -z $bash_window_exists ]]; then
+	tmux neww -t $selected_name -c $selected -n bash
+	# tmux send-keys -t $selected_name:bash 'zsh' Enter
+else
+	echo "bash window exists"
+fi
+
+if [[ -z $client_exists ]]; then
+	echo "no client exists"
+	tmux attach -t $selected_name
+	exit 0
+else
+	echo "client exists"
+	tmux switch-client -t $selected_name
+	exit 0
+fi

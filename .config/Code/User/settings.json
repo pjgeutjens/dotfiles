@@ -1,0 +1,6 @@
+{
+    "workbench.colorTheme": "Nord",
+    "extensions.experimental.affinity": {
+        "asvetliakov.vscode-neovim": 1
+    }
+}
