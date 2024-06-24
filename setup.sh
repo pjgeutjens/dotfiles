@@ -36,6 +36,9 @@ rm -rf ~/.config/nvim
 cd dotfiles/
 stow .
 
+sudo systemctl disable sddm
+sudo systemctl enable lightdm
+
 curl -sS https://download.spotify.com/debian/pubkey_6224F9941A8AA6D1.gpg | gpg --import -
 yay -Sy spotify
 
