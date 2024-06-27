@@ -1,10 +1,11 @@
+#!/bin/bash
+
 cd ~
 mkdir personal
 mkdir work
 
+# base packages for install
 sudo pacman -Syu base-devel git github-cli
-
-yay -Sy fzf stow
 
 git config --global user.email "pieter.geutjens@leapconsulting.be"
 git config --global user.name "Pieter Jan Geutjens"
@@ -15,14 +16,19 @@ git clone https://aur.archlinux.org/yay.git
 cd yay
 makepkg -si
 
-yay -Sy alacritty tmux neovim visual-studio-code-bin google-chrome-stable --needed
-yay -Sy acpi arandr archlinux-xdg-menu awesome-terminal-fonts dex dmenu dunst feh galculator gvfs gvfs-afc gvfs-gphoto2 gvfs-mtp gvfs-nfs gvfs-smb i3-wm i3blocks i3lock i3status jq lightdm lightdm-slick-greeter nwg-look mpv network-manager-applet numlockx playerctl polkit-gnome rofi scrot sysstat thunar thunar-archive-plugin thunar-volman tumbler unzip xarchiver xbindkeys xdg-user-dirs-gtk xed xfce4-terminal xorg-xbacklight xorg-xdpyinfo zip --needed
-yay -Sy awesome-terminal-fonts ttf-jetbrains-mono-nerd
-yay -Sy --needed i3blocks i3lock i3status rofi
-yay -Sy network-manager-applet --needed
+# install packages with yay
+yay -Sy fzf stow yay -Sy alacritty tmux neovim visual-studio-code-bin google-chrome-stable acpi arandr archlinux-xdg-menu awesome-terminal-fonts dex dmenu dunst feh galculator gvfs gvfs-afc gvfs-gphoto2 gvfs-mtp gvfs-nfs gvfs-smb i3-wm i3blocks i3lock i3status jq lightdm lightdm-slick-greeter nwg-look mpv network-manager-applet numlockx playerctl polkit-gnome rofi scrot sysstat thunar thunar-archive-plugin thunar-volman tumbler unzip xarchiver xbindkeys xdg-user-dirs-gtk xed xfce4-terminal xorg-xbacklight xorg-xdpyinfo zip awesome-terminal-fonts ttf-jetbrains-mono-nerd i3blocks i3lock i3status rofi network-manager-applet --needed
 
-cd ~
-git clone https://github.com/pjgeutjens/dotfiles.git && cd dotfiles
+inside_git_repo="$(git rev-parse --is-inside-work-tree 2>/dev/null)"
+current_folder=$(basename "$PWD")
+
+if ! [ "$inside_git_repo" ]; then
+  cd ~
+  git clone https://github.com/pjgeutjens/dotfiles.git && cd dotfiles
+else
+  echo "assuming to be running inside dotfiles repo"
+fi
+
 rm -rf ~/.bashrc
 rm -rf ~/.config/Code
 rm -rf ~/.config/Thunar/
@@ -33,7 +39,6 @@ rm -rf ~/.config/i3
 rm -rf ~/.config/rofi
 rm -rf ~/.config/tmux
 rm -rf ~/.config/nvim
-cd dotfiles/
 stow .
 
 sudo systemctl disable sddm
