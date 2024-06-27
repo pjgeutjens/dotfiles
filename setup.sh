@@ -17,7 +17,7 @@ cd yay
 makepkg -si
 
 # install packages with yay
-yay -Sy fzf stow yay -Sy alacritty tmux neovim visual-studio-code-bin google-chrome-stable acpi arandr archlinux-xdg-menu awesome-terminal-fonts dex dmenu dunst feh galculator gvfs gvfs-afc gvfs-gphoto2 gvfs-mtp gvfs-nfs gvfs-smb i3-wm i3blocks i3lock i3status jq lightdm lightdm-slick-greeter nwg-look mpv network-manager-applet numlockx playerctl polkit-gnome rofi scrot sysstat thunar thunar-archive-plugin thunar-volman tumbler unzip xarchiver xbindkeys xdg-user-dirs-gtk xed xfce4-terminal xorg-xbacklight xorg-xdpyinfo zip awesome-terminal-fonts ttf-jetbrains-mono-nerd i3blocks i3lock i3status rofi network-manager-applet --needed
+yay -Sy fzf stow alacritty tmux neovim visual-studio-code-bin google-chrome-stable acpi arandr archlinux-xdg-menu awesome-terminal-fonts dex dmenu dunst feh galculator gvfs gvfs-afc gvfs-gphoto2 gvfs-mtp gvfs-nfs gvfs-smb i3-wm i3blocks i3lock i3status jq lightdm lightdm-slick-greeter nwg-look mpv network-manager-applet numlockx playerctl polkit-gnome rofi scrot sysstat thunar thunar-archive-plugin thunar-volman tumbler unzip xarchiver xbindkeys xdg-user-dirs-gtk xed xfce4-terminal xorg-xbacklight xorg-xdpyinfo zip awesome-terminal-fonts ttf-jetbrains-mono-nerd i3blocks i3lock i3status rofi network-manager-applet --needed
 
 inside_git_repo="$(git rev-parse --is-inside-work-tree 2>/dev/null)"
 current_folder=$(basename "$PWD")
