@@ -22,7 +22,7 @@ yay -Sy --needed i3blocks i3lock i3status rofi
 yay -Sy network-manager-applet --needed
 
 cd ~
-git clone https://github.com/pjgeutjens/dotfiles.git && cd dotfiles
+# git clone https://github.com/pjgeutjens/dotfiles.git && cd dotfiles
 rm -rf ~/.bashrc
 rm -rf ~/.config/Code
 rm -rf ~/.config/Thunar/
@@ -36,12 +36,21 @@ rm -rf ~/.config/nvim
 cd dotfiles/
 stow .
 
-sudo systemctl disable sddm
-sudo systemctl enable lightdm
+# sudo systemctl disable sddm
+# sudo systemctl enable lightdm
 
+#tmux tpm
+git clone https://github.com/tmux-plugins/tpm ~/.tmux/plugins/tpm
+
+# spotify
 curl -sS https://download.spotify.com/debian/pubkey_6224F9941A8AA6D1.gpg | gpg --import -
 yay -Sy spotify
 
-curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.39.7/install.sh | bashrc
+# 1password
+curl -sS https://downloads.1password.com/linux/keys/1password.asc | gpg --import
+yay -Sy 1password
+
+# nvm
+curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.39.7/install.sh | bash
 source .bashrc
 nvm install --lts
